@@ -2,22 +2,19 @@ import express from 'express'
 import admin from '../middleware/admin.mjs';
 import auth from '../middleware/auth.mjs';
 
+
 import {Genre,validate}from '../models/genres.mjs'
 const router = express.Router();
 
 
 
+router.get('/',async (req,res,next)=>{
+   
 
-router.get('/',async (req,res)=>{
-    try{
-
-        const genres=await Genre.find().sort();  
-        
-        res.send(genres);
-    }catch(ex){
-        res.status(500).send("Something failed");
-    }
-})
+    const genres=await Genre.find().sort();  
+    res.send(genres);
+    
+});
 router.get('/:id',async(req,res)=>{
    const  genre = await Genre.findById(req.params.id)
 
