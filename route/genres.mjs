@@ -1,15 +1,12 @@
 import express from 'express'
 import admin from '../middleware/admin.mjs';
 import auth from '../middleware/auth.mjs';
-
-
 import {Genre,validate}from '../models/genres.mjs'
 const router = express.Router();
 
 
 
 router.get('/',async (req,res,next)=>{
-   
 
     const genres=await Genre.find().sort();  
     res.send(genres);
@@ -52,7 +49,7 @@ router.put('/:id',async(req,res)=>{
 })
 router.delete('/:id',[auth,admin],async(req,res)=>{
     
-    const    genre = await Genre.findByIdAndDelete((req.params.id))
+    const genre = await Genre.findByIdAndDelete((req.params.id))
    
     if(!genre) return res.status(404).send("No matching id number")
     res.send(genre)

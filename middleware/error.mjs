@@ -1,11 +1,6 @@
-import winston from "winston";
-export default function(err,req,res,next){
-    winston.error(err.message,err);
-    //error
-    //warn
-    //info
-    //verbose
-    //debug
-    //silly
+import logger from '../logger/logger.mjs'
+export default function(error,req,res,next){
+    logger.error(error.message,{metadata:error});
+  
     res.status(500).send("Something failed");
 }
