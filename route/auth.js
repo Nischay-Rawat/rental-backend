@@ -1,8 +1,9 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
-import {User,validate} from '../models/users.mjs'
+import {User} from '../models/users.js'
 import _ from 'lodash'
-import auth from '../middleware/auth.mjs'
+import Joi from 'joi'
+
 const router = express.Router();
 
 
@@ -11,10 +12,6 @@ const router = express.Router();
 router.get('/',async (req,res)=>{
 const user=await User.find().sort();  
 
-res.send(user);
-})
-router.get('/me',auth,async(req,res)=>{
-const user=await User.findById(req.user._id).select('-password')
 res.send(user);
 })
 router.get('/:id',async(req,res)=>{
@@ -31,16 +28,13 @@ router.post('/',async(req,res)=>{
     const {error}=validate(req.body);
     if(error)return res.status(400).send(error.message)
 let user=await User.findOne({email:req.body.email});
-if(user)return res.status(400).send("User already registered");
- user=new User(_.pick(req.body,['email','name','password']))
- const salt=await bcrypt.genSalt(10);
-  user.password=await bcrypt.hash(user.password,salt);
+if(!user)return res.status(400).send("Invalid email or password");
 
- await user.save();
-
+const validPassword= await bcrypt.compare(req.body.password,user.password)
+if(!validPassword)return res.status(400).send("Invalid email or password");
 const token=user.generateAuthToken();
- res.header('x-auth-token',token).send(_.pick(user,['email','name',]));
 
+res.send(token);
 })
 
 router.put('/:id',async(req,res)=>{
@@ -68,6 +62,15 @@ router.delete('/:id',async(req,res)=>{
     
     
 })
+function validate(user){
+    const schema=Joi.object({
+    
+        email:Joi.string().required().min(3),
+        password:Joi.string().min(3).required()
+        
+    })
+    return schema.validate(user);
+    }
 
 
 export default router;

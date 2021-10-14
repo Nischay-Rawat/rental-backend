@@ -1,7 +1,7 @@
 import express from 'express'
-import { Customer } from '../models/customers.mjs'
-import {Movie} from '../models/movies.mjs'
-import { Rental,validate } from '../models/rentals.mjs'
+import { Customer } from '../models/customers.js'
+import {Movie} from '../models/movies.js'
+import { Rental,validate } from '../models/rentals.js'
 
 const router=express.Router();
 router.get('/',async(req,res)=>{

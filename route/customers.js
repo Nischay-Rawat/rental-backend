@@ -1,5 +1,5 @@
 import express from 'express'
-import {Customer,validate} from '../models/customers.mjs'
+import {Customer,validate} from '../models/customers.js'
 const router = express.Router();
 
 

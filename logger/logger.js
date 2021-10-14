@@ -12,12 +12,12 @@ const {createLogger,transports,format,combine} =winston;
                 format:format.combine(format.json(),format.timestamp())
                 
             }),
-           new transports.MongoDB(
-               {
-                level:'info',
-                db:'mongodb://localhost/vidly',
+        //    new transports.MongoDB(
+        //        {
+        //         level:'info',
+        //         db:'mongodb://localhost/vidly',
     
-            })
+        //     })
         ],
         exceptionHandlers: [
             new transports.File({ filename: 'exceptions.log' ,level:'info'})

@@ -1,25 +1,26 @@
 import express from 'express'
-import admin from '../middleware/admin.mjs';
-import auth from '../middleware/auth.mjs';
-import {Genre,validate}from '../models/genres.mjs'
+import validateObjectId from '../middleware/validateObjectId.js';
+import admin from '../middleware/admin.js';
+import auth from '../middleware/auth.js';
+import {Genre,validate}from '../models/genres.js'
 const router = express.Router();
 
 
 
-router.get('/',async (req,res,next)=>{
+router.get('/',async(req,res)=>{
 
     const genres=await Genre.find().sort();  
     res.send(genres);
     
 });
-router.get('/:id',async(req,res)=>{
-   const  genre = await Genre.findById(req.params.id)
+router.get('/:id',validateObjectId,async(req,res)=>{
+ 
+
+    const  genre = await Genre.findById(req.params.id)
 
    if(!genre)
    return res.status(404).send('No matching id number')
     
-
-
 res.send(genre)
 })
 router.post('/',auth,async(req,res)=>{

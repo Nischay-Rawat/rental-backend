@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import mongoose from 'mongoose'
-import { genreSchema } from './genres.mjs';
+import { genreSchema } from './genres.js';
 
 
 const Movie=new mongoose.model('movies',mongoose.Schema({
@@ -28,4 +28,4 @@ function validateMovie(course){
     })
     return schema.validate(course);
     }
-    export {Movie,validateMovie as validate}
+export {Movie,validateMovie as validate}

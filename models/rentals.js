@@ -14,7 +14,7 @@ const Rental =mongoose.model('Rental',mongoose.Schema({
         }),
         required:true
         },
-    movie:{
+        movie:{
         type:mongoose.Schema({
             title:{
                 type:String,required:true,trim:true,minlength:5,maxlegth:255
@@ -24,7 +24,7 @@ const Rental =mongoose.model('Rental',mongoose.Schema({
             }
         }),
         required:true
-    },
+        },
         dateOut:{
             type:Date,required:true,default:Date.now
         },
@@ -42,7 +42,7 @@ const Rental =mongoose.model('Rental',mongoose.Schema({
             customerId:Joi.myJoiObjectId().required(),
             movieId:Joi.myJoiObjectId().required(),
         })
-        ;
+        
         return schema.validate(rental);
     }
 export{validateRental as validate,Rental}

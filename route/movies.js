@@ -1,6 +1,6 @@
 import express from 'express'
-import {Movie,validate} from '../models/movies.mjs'
-import { Genre } from '../models/genres.mjs';
+import {Movie,validate} from '../models/movies.js'
+import { Genre } from '../models/genres.js';
 const router = express.Router();
 router.get('/',async (req,res)=>{
 const movie=await Movie.find().sort();  
