@@ -11,8 +11,8 @@ config();
 import logger from './logger/logger.js';
 import validation from './startup/validation.js'
 validation();
-// import prod from './startup/prod.js'
-// prod(app);
+import prod from './startup/prod.js'
+prod(app);
 const port =process.env.PORT||4080;
 const server=app.listen(port,()=>{
     logger.info(`app is listening on port no ${port}`)
